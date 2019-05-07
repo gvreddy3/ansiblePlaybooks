@@ -1,0 +1,11 @@
+--- # run once playbook
+ - hosts: myhosts
+   user: gvreddy
+   become: yes
+   gather_facts: no
+   tasks:
+    - name: run the commands on all hosts to gather info
+      raw: /usr/bin/uptime >> uptime.logs
+    - name: collect var dir info
+      raw: df -h /var >> var.log
+      run_once: true

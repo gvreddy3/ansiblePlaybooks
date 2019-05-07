@@ -1,0 +1,4 @@
+- name: install apache packafe
+  yum: pkg=httpd state=latest
+- name: Start telnet service
+  service: name=httpd state=restarted 

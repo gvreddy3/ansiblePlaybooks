@@ -1,0 +1,13 @@
+---
+ - hosts: local
+   user: gvreddy
+   become: yes
+   gather_facts: no
+   tasks:
+    - name: send email to gvreddy user 
+      mail:
+        host='localhost'
+        port=25
+        to="gvreddy"
+        subject="our host is fonished deploying"
+        body='System called {{ ansible_hostname }} has been completed'

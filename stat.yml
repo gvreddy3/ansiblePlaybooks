@@ -1,0 +1,11 @@
+--- # stat module
+ - hosts: myhosts
+   user: gvreddy
+   become: yes
+   gather_facts: no
+   tasks:
+    - name: Does a file/dir in path exist?
+      stat: path=/home/gvreddy/abc
+      register: g
+    - debug: msg="The path exist is a dir"
+      when: g.stat.isdir is defined and g.stat.isdir

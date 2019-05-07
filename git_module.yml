@@ -1,0 +1,6 @@
+ - hosts: remote
+   user: gvreddy
+   become: yes
+   tasks:
+    - name: Check GIT repo on remote server
+      git: repo=ssh://gvreddy@ansnode1/home/gvreddy/testrepo dest=/home/gvreddy/gitrepo

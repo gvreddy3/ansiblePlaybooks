@@ -1,0 +1,12 @@
+ - name: Install NFS util package in nfs master server
+   action: yum name={{item}} state=latest
+   with_items:
+   - "{{nfsutil_pkg}}"
+   - "{{telnet_pkg}}"
+ - name: Create share path in master server
+   file: path={{export_path}} state=directory mode=0777
+ - name: Copy export file to remote server
+   copy: src=exports dest=/etc/exports owner=root group=root mode=0644
+   notify: 
+     - startserverservices
+     - export nfsshare

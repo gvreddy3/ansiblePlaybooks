@@ -1,0 +1,39 @@
+--- # Database deployment 
+ - hosts: remote1
+   user: gvreddy
+   become: yes
+   gather_facts: no
+   connection: ssh
+   vars:
+     dbserver_pkg: mariadb
+     dbserver: ansnode2
+     dbinstall_dir: /var/lib
+     db_name: emp
+     distribution: RedHat
+     dbversion: 5.15
+   tasks:
+   - name: Install database package
+     action: yum name={{item}} state=latest
+     with_items:
+      - "{{dbserver_pkg}}"
+     notify:
+      - start service
+      - run secureinstall
+      - restart service
+      - create database
+      - show database
+   - name: Create cron job for database backup
+     cron: name="myDBbackup" minute="0" hour="0" job="mysqldump -uroot -phadoop@123 --databases emp > mysqldump.bkp"
+   handlers:
+   - name: start service
+     action: service name={{dbserver_pkg}} state=restarted
+   - name: run secureinstall
+     pause: prompt="please run mysql_installer_secure"
+   - name: restart service
+     action: service name={{dbserver_pkg}} state=restarted
+   - name: create database
+     shell: mysqladmin -u root -phadoop@123 create emp
+   - name: show database
+     shell: mysql -u root -phadoop@123 -e 'SHOW DATABASES;'
+     register: result
+   - debug: var=result

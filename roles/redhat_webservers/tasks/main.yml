@@ -1,0 +1,21 @@
+ - name: Install httpd 
+   yum: pkg={{ RedHat }} state=latest
+   when: "ansible_os_family == 'RedHat'"
+   notify: restart httpd
+   ignore_errors: yes
+ - name: Waiting for port 80 to comeup as httpd service is not came up
+   wait_for:
+     port: 80
+     state: started
+ - name: install telnet
+   debug:  
+   when: ansible_os_family == 'RedHat'
+   notify: install telnet
+ - name: install tomcat package
+   yum: pkg=tomcat state=installed
+ - shell: systemctl status tomcat
+   register: result
+   until: result.stdout.find("active (running)") != -1
+   retries: 3
+   delay: 3
+ - debug: var=result

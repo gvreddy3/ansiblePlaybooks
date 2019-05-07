@@ -1,0 +1,9 @@
+--- # Master Playbook for NFS master server
+ - hosts: remote1
+   user: gvreddy
+   become: yes
+   gather_facts: yes
+   connection: ssh 
+   roles: 
+   - nfs_server
+  

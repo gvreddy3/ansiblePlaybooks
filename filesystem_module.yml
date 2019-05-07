@@ -1,0 +1,12 @@
+--- #Filesystem module
+ - hosts: remote
+   user: gvreddy
+   become: yes
+   gather_facts: no
+   connection: ssh
+   tasks:
+     - name: Format the remote data patition
+       filesystem: fstype=xfs dev=/dev/mapper/cl-root1
+# opts="-cc"  
+     - name: mount the format partition
+       mount: name=/mnt/data src=/dev/mapper/cl-root1i fstype=xfs opts=rw state=present

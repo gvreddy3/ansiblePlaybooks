@@ -1,0 +1,19 @@
+ - name: install web server
+   action: pkgi name=httpd state=latest
+   notify: restart http
+ - name: Install other packages
+   action: yum name={{item}} state=latest
+   with_items:
+     - telnet
+     - lynx
+   tags: install_list
+ - name: Verify the service status
+   command: systemctl status httpd
+   register: result
+   ignore_errors: yes
+   tags: ignore_check
+ - name: collect installed package lisr
+   command: yum list installed 
+   register: installed_pkg
+ - debug: var=result
+ - debug: var=installed_pkg

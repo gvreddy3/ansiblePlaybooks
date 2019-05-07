@@ -1,0 +1,8 @@
+--- # Database deployment 
+ - hosts: remote1
+   user: gvreddy
+   become: yes
+   gather_facts: no
+   connection: ssh
+   roles:
+    - database_roles

@@ -1,0 +1,6 @@
+dbserver_pkg: mariadb
+dbserver: ansnode2
+dbinstall_dir: /var/lib
+db_name: emp
+distribution: RedHat
+dbversion: 5.15

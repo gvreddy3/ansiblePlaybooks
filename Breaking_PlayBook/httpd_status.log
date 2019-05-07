@@ -1,0 +1,16 @@
+● httpd.service - The Apache HTTP Server
+   Loaded: loaded (/usr/lib/systemd/system/httpd.service; disabled; vendor preset: disabled)
+   Active: inactive (dead)
+     Docs: man:httpd(8)
+           man:apachectl(8)
+
+Mar 21 11:48:48 ansnode1 systemd[1]: Starting The Apache HTTP Server...
+Mar 21 11:48:48 ansnode1 httpd[10885]: AH00558: httpd: Could not reliably determine the server's fully qualified domain name, using 192.168.56.111. Set the 'ServerName' directive globally to suppress this message
+Mar 21 11:48:48 ansnode1 systemd[1]: Started The Apache HTTP Server.
+Mar 21 11:49:17 ansnode1 systemd[1]: Stopping The Apache HTTP Server...
+Mar 21 11:49:18 ansnode1 systemd[1]: Stopped The Apache HTTP Server.
+Mar 21 11:50:09 ansnode1 systemd[1]: Starting The Apache HTTP Server...
+Mar 21 11:50:09 ansnode1 httpd[11415]: AH00558: httpd: Could not reliably determine the server's fully qualified domain name, using 192.168.56.111. Set the 'ServerName' directive globally to suppress this message
+Mar 21 11:50:09 ansnode1 systemd[1]: Started The Apache HTTP Server.
+Mar 21 11:50:37 ansnode1 systemd[1]: Stopping The Apache HTTP Server...
+Mar 21 11:50:38 ansnode1 systemd[1]: Stopped The Apache HTTP Server.

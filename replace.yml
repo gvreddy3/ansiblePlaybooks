@@ -1,0 +1,7 @@
+--- # debug module playboot
+ - hosts: local
+   user: gvreddy
+   become: yes
+   tasks:
+    - name: install package
+      replace: path=/etc/httpd/conf/httpd.conf regexp='DocumentRoot.*$' replace='DocumentRoot "/var/www/gvreddy"'

@@ -1,0 +1,10 @@
+hadoop:
+ - vamshi
+ - adnan
+ - abdul
+cloud:
+ - akash
+ - paras
+database:
+ - srikant
+ - ramana

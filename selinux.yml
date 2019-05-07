@@ -1,0 +1,7 @@
+ - hosts: myhosts
+   user: gvreddy
+   become: yes
+   gather_facts: no
+   tasks:
+     - name: disable selinux
+       selinux: state=disabled

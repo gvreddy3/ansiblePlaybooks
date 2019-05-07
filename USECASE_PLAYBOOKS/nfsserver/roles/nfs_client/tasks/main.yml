@@ -1,0 +1,7 @@
+ - name: Copy export file to remote server
+   copy: src=exports dest=/etc/exports owner=root group=root mode=0644
+   notify: 
+   - installclientpackages
+   - start client services
+   - create localmount
+   - mount the nfsshare

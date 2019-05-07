@@ -1,0 +1,20 @@
+--- # TAGS Functionality Example
+ - hosts: myhosts
+   user: gvreddy
+   become: yes
+   connection: ssh
+   gather_facts: no
+   tasks:
+     - name: install telnet package
+#       yum: pkg=telnet state=latest
+       package:
+        name: telnet
+        state: latest
+       tags:
+         - install 
+     - name: verify the package status
+       raw: yum list installed |grep telnet > telnet.log
+       tags: 
+#         - verification
+#         - always        -- keywaord alwas run default in parllel to other tags even it not mention 
+         - abcd

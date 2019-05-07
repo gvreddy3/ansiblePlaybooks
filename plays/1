@@ -1,0 +1,4 @@
+- name: install telnet packafe
+  yum: pkg=telnet state=latest
+- name: Start telnet service
+  service: name=telnet state=restarted

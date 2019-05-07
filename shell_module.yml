@@ -1,0 +1,10 @@
+ - hosts: myhosts
+   user: gvreddy
+   become: yes
+   gather_facts: no
+   tasks:
+     - name: Executing the shell command
+       shell: uptime >> uptime.log
+       args:
+          chdir: log
+          creates: uptime.log 

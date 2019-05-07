@@ -1,0 +1,12 @@
+ - name: start service
+   action: service name={{dbserver_pkg}} state=restarted
+ - name: run secureinstall
+   pause: prompt="please run mysql_installer_secure"
+ - name: restart service
+   action: service name={{dbserver_pkg}} state=restarted
+ - name: create database
+   shell: mysqladmin -u root -phadoop@123 create emp
+ - name: show database
+   shell: mysql -u root -phadoop@123 -e 'SHOW DATABASES;'
+   register: result
+ - debug: var=result

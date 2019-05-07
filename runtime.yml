@@ -1,0 +1,10 @@
+--- # passing varibles into playboog from commandlinei, mark in '' for variable passing at runtime
+ - hosts:  '{{ host }}'
+   user: '{{ user }}'
+   become: yes
+   tasks:
+    - name: istall package
+      yum: pkg={{ pkg }} state=latest
+
+
+#ansible-playbook runtime.yml --extra-vars  "host=myhosts user=gvreddy pkg=telnet"   -->  run this commoan from cmd line

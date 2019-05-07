@@ -1,0 +1,11 @@
+--- # Jinja2 template 
+ - hosts: centos:suse
+   user: gvreddy
+   become: yes
+   vars:
+     userName: gvreddy
+     userPassword: hadoop@123
+     connectionType: SFTP
+   tasks:
+     - name: install the config file customized from system configuration
+       template: src=test.conf.j2 dest=/home/gvreddy/test.conf owner=gvreddy  owner=750

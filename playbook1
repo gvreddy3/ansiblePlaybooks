@@ -1,0 +1,11 @@
+---
+- hosts: myhosts
+  vars:
+    author_name: vamshi
+  vars_files: 
+  - file.yml
+  tasks:
+  - name: install pakage of apache
+    yum: pkg=httpd state=installed update_cache=true
+#  - name: start the service
+#    yum: pkg=httpd state=present 

@@ -1,0 +1,12 @@
+--- #Error Handling example
+ - hosts: :myhosts
+   user: gvreddy 
+   become: yes
+   connection: ssh
+   gather_facts: yes
+   tasks: 
+     - name: Execute command that faols
+       command: /bin/false
+       ignore_errors: yes
+     - name: install package
+       yum: pkg=telnet state=latest

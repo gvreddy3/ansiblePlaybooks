@@ -1,0 +1,8 @@
+- name: Install apache package
+  yum: pkg=httpd state=latest
+  notify: restart httpd
+- name: install  packages
+  yum: pkg= {{items}} state=latest
+  with_items:
+    - telnet
+    - lynx

@@ -1,0 +1,9 @@
+distribution: RedHat
+nfsutil_pkg: nfs-utils
+telnet_pkg: telnet
+nfsserver: nfs-server
+nfsrpcbind: rpcbind
+nfslock: nfs-lock
+nfsidmap: nfs-idmap
+export_path: /var/gvreddy
+client_path: /mnt/gvreddy

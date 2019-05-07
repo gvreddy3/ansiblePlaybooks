@@ -1,0 +1,9 @@
+---
+ - hosts: myhosts
+   user: gvreddy
+   become: yes
+   tasks:
+    - name: Blocklist kernel module
+      kernel_blacklist: name=dummy state=present
+#dummy = kernel module name ..example
+# Black list module name will be update in /etc/modprobe.d/blacklist-ansible.conf -- file. Hence the blocklisted module won't be loaded during system boot

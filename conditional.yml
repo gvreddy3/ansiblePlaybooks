@@ -1,0 +1,18 @@
+--- # Conditional play book for different OS families
+ - hosts: myhosts
+   user: gvreddy
+   become: yes
+   gather_facts: yes
+   connection: ssh
+   vars:
+     playbook_type: install apache service
+   vars_files:
+     - conf/copyright.yml
+     - conf/web_req.yml
+   tasks:
+     - name: Install apache service in Suse
+       command: zypper in -y apache2
+       when: ansible_os_family == "Suse"
+     - name: Install apache service in Centos
+       command: yum -y install httpd
+       when: ansible_os_family == "RedHat"

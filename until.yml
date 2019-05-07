@@ -1,0 +1,15 @@
+--- # use untill module ,  it continues till it find service in start mode , restart the httpd service then it will complete
+ - hosts: remote
+   user: gvreddy
+   become: yes
+   gather_facts: yes
+   tasks:
+     - name: Install http service
+       yum: pkg=httpd state=latest
+     - name: Check status of HTTP service 
+       shell: systemctl status httpd
+       register: result
+       until: result.stdout.find("active (running)") != -1
+       retries: 5
+       delay: 5
+     - debug: var=result

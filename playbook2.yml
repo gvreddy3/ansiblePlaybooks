@@ -1,0 +1,28 @@
+--- # my First YAML playbook
+ - hosts: :myhosts
+   user: gvreddy 
+   become: yes
+   connection: ssh
+   gather_facts: yes
+   vars:
+     playbook_version: 0.1.a
+   vars_files:
+     - conf/copyright.yml
+     - conf/web_req.yml
+   vars_prompt:
+     - name: pkg_name 
+       prompt: Enter package name ? 
+   tasks:
+     - name: install apache server
+       action: yum name={{pkg_httpd}} state=installed 
+#       async: 300
+#       poll: 3
+       notify: restart apache
+#     - name: install telnet package
+#       action: yum name={{pkg_telnet}} state=installed
+     - name: Install package dynamically
+       action: yum name={{pkg_name}} state=installed
+   handlers:  
+     - name: restart apache 
+       action: service name=httpd state=restarted
+       

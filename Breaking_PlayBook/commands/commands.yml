@@ -1,0 +1,2 @@
+- name: Collect the installed package list
+  raw: yum list installed|egrep -i 'httpd|lynx|telnet' > Pkg_install.log

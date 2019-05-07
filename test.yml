@@ -1,0 +1,10 @@
+---
+ - hosts: remote1
+   remote_user: gvreddy
+   become: yes
+   become_method: sudo
+   gather_facts: yes
+   connection: ssh
+   tasks:
+   - name: install package in ansible 2.0
+     package: name=telnet state=latest

@@ -1,0 +1,53 @@
+--- # Install NFS server and Client and setup NFS mount point
+ - hosts: remote1
+   user: gvreddy
+   become: yes
+   gather_facts: yes
+   connection: ssh 
+   vars:
+     distribution: RedHat
+     nfsutil_pkg: nfs-utils
+     nfslib_pkg: nfs-utils-lib
+     nfsserver: nfs-server
+     nfsrpcbind: rpcbind
+     nfslock: nfs-lock
+     nfsidmap: nfs-idmap
+     export_path: /var/gvreddy
+   tasks:
+   - name: Install NFS util package in nfs master server
+     action: yum name=nfs-utils state=latest
+   - name: Create share path in master server
+     file: path=/var/gvreddy state=directory mode=0777
+   - name: Copy export file to remote server
+     copy: src=/home/gvreddy/ansible_playbooks/USECASE_PLAYBOOKS/nfsserver/exports dest=/etc/exports owner=root group=root mode=0644
+   - name: Start rpcbind server in master
+     action: service name=rpcbind state=started enabled=yes
+   - name: Start nfs-server service in master
+     action: service name=nfs-server state=started enabled=yes
+     notify: exportfs
+   - name: Start nfs-lock service in master
+     action: service name=nfs-lock state=started enabled=yes
+   - name: Start nfs-idmap service
+     action: service name=nfs-idmap state=started enabled=yes
+   - name: Install NFS util package in nfs client server
+     action: yum name=nfs-utils state=latest
+     delegate_to: 127.0.0.1
+     delegate_to: 127.0.0.1
+   - name: Start rpcbind server in master
+     action: service name=rpcbind state=started enabled=yes
+     delegate_to: 127.0.0.1
+   - name: Start nfs-lock service in master
+     action: service name=nfs-lock state=started enabled=yes
+     delegate_to: 127.0.0.1
+   - name: Start nfs-idmap service
+     action: service name=nfs-idmap state=started enabled=yes
+     delegate_to: 127.0.0.1
+   - name: Create local dir to mount in client
+     file: path=/mnt/gvreddy state=directory mode=0755
+     delegate_to: 127.0.0.1
+   - name: Mount the directory with nfs share
+     mount: name=/mnt/gvreddy src=192.168.56.112:/var/gvreddy fstype=nfs state=mounted
+     delegate_to: 127.0.0.1
+   handlers:
+   - name: exportfs 
+     shell: exportfs -a

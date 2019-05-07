@@ -1,0 +1,16 @@
+--- # MySQL DB Module
+ - hosts: remote
+   user: gvreddy
+   become: yes
+   gather_facts: no
+   tasks:
+    - name: Install mysql python lib
+      action: yum name=MYSQL-python state=latest
+    - name: Create new database
+      mysql_db: name=gvreddy state=present login_user=root login_password=hadoop@123
+
+#    - name: Take MYSQl DUMP for Backup
+#      mysql_db: name=gvreddy state=dump target=/var/tmp/mysqlbackup.msql login_user=root login_password=hadoop@123
+
+#     - name: Create a new user
+#       mysql_user: name=user1 password=hadoop@123 priv=*.*:ALL state=present login_user=root login_password=hadoop@123

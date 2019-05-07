@@ -1,0 +1,10 @@
+--- # create & delete users
+ - hosts: centos
+   user: gvreddy
+   become: yes
+   gather_facts: yes
+   tasks:
+    - name: Create user
+      user: name=admin comment="admin user permissions" group=wheel shell=/bin/bash
+    - name: delete user
+      user: name=user2 state=absent remove=yes

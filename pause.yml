@@ -1,0 +1,14 @@
+--- # Pause module
+ - hosts: local
+   user: gvreddy
+   become: yes
+   tasks:
+    - name: Install http package
+      action: yum name=httpd state=installed
+    - name: Pausing to verify
+      pause:
+ #      prompt: Verify the package installation status !
+# promp will wait till you hit enter, seconds wait for 3 sec and proceed further with out manual intervention
+       seconds: 3
+    - name: Install other package after verification , hit enter
+      action: yum name=telnet state=present

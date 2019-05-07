@@ -1,0 +1,7 @@
+--- # Lookup playbook
+ - hosts: myhosts
+   user: gvreddy
+   become: yes
+   tasks:
+#     - debug: msg="lookup for the name {{ lookup ('csvfile','vamshi file=lookup.csv delimiter=, default=Nomatch') }}"
+      - debug: msg="{{lookup ('env','HOME')}}"

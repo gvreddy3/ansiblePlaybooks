@@ -1,0 +1,9 @@
+--- # Fetch the files from other nodes to Ansible control node ( Reverse to Copy module)
+ - hosts: myhosts
+   user: gvreddy
+   become: yes
+   gather_facts: yes
+   tasks:
+    - name: Pull the files to contoll node from all other nodes
+#      fetch: src=/etc/hosts dest=/home/gvreddy    # it create the direcory with server name and place the file as per source directory structure
+      fetch: src=/etc/hosts dest=/home/gvreddy/{{ansible_hostname}}-duplicate flat=yes  # it just pull files with following name without directory 

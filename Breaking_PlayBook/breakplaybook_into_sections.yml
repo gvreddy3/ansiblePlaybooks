@@ -1,0 +1,13 @@
+--- # break playbook into individual small playbooks
+ - hosts: myhosts
+   user: gvreddy
+   become: yes
+   gather_facts: yes
+   connection: ssh
+   vars_files:
+     - variables/variables.yml
+   tasks:
+     - include: packages/packages.yml
+     - include: commands/commands.yml
+   handlers:
+     - include: handlers/handlers.yml

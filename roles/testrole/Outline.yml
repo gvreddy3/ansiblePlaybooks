@@ -1,0 +1,32 @@
+--- # outline playbook translation
+ - hosts: myhosts
+   user: gvreddy
+   become: yes
+   gather_facts: no
+   tasks:
+    - name: date & time stam when playbook start
+      command: /usr/bin/date 
+      register: timestamp_start
+    - debug: var=timestamp_start
+    - name: install web server
+      yum: pkg=httpd state=latest
+      notify: restart http
+    - name: Verify the service status
+#      service: name=httpd state=started
+      command: systemctl status httpd
+      register: result
+      ignore_errors: yes
+    - debug: var=result
+    - name: install telnet service
+      yum: pkg=telnet state=latest
+    - name: collect installed package lisr
+      command: yum list installed 
+      register: installed_pkg
+    - debug: var=installed_pkg
+    - name: collect playbook end time
+      command: /usr/bin/date
+      register: timestamp_end
+    - debug: var=timestamp_end
+   handlers:
+    - name: restart http
+      service: name=httpd state=restarted

@@ -1,0 +1,14 @@
+ - name: install apache2
+   zypper: pkg={{ Suse }} state=installed 
+   when: "ansible_os_family == 'Suse'"
+   ignore_errors: yes
+   notify: restart apache2
+ - name: Install httpd 
+   yum: pkg={{ RedHat }} state=latest
+   when: "ansible_os_family == 'RedHat'"
+   notify: restart httpd
+   ignore_errors: yes
+ - name: install telnet
+   debug:  
+   when: ansible_os_family == 'RedHat'
+   notify: install telnet

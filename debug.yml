@@ -1,0 +1,15 @@
+--- # debug module playboot
+ - hosts: local
+   user: gvreddy
+   become: yes
+   tasks:
+    - name: install package
+      action: yum name=lynx state=present
+    - debug: msg="install the package"
+    - name: Get system uptime
+      shell: uptime
+      register: result
+#    - debug: var=result
+    - debug: msg="This is printed to {{result}}"
+    - name: fileinline module
+      lineinfile: path=/etc/hosts line="192.168.56.111 hostname"

@@ -1,0 +1,16 @@
+ - name: installclientpackages
+   action: yum name={{item}} state=latest
+   with_items: 
+   - "{{nfsutil_pkg}}"
+   - "{{telnet_pkg}}"
+   notify: start client services
+ - name: start client services
+   action: service name={{item}} state=started enabled=yes
+   with_items:
+   - "{{nfsrpcbind}}"
+   - "{{nfslock}}"
+   - "{{nfsidmap}}"
+ - name: create localmount
+   file: path={{client_path}} state=directory mode=0755 
+ - name: mount the nfsshare
+   mount: name={{client_path}} src=192.168.56.112:{{export_path}} fstype=nfs state=mounted

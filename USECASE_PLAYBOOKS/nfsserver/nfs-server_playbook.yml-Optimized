@@ -1,0 +1,65 @@
+--- # Install NFS server and Client and setup NFS mount point
+ - hosts: remote1
+   user: gvreddy
+   become: yes
+   gather_facts: yes
+   connection: ssh 
+   vars:
+     distribution: RedHat
+     nfsutil_pkg: nfs-utils
+     telnet_pkg: telnet
+     nfsserver: nfs-server
+     nfsrpcbind: rpcbind
+     nfslock: nfs-lock
+     nfsidmap: nfs-idmap
+     export_path: /var/gvreddy
+     client_path: /mnt/gvreddy
+   tasks:
+   - name: Install NFS util package in nfs master server
+     action: yum name={{item}} state=latest
+     with_items:
+     - "{{nfsutil_pkg}}"
+     - "{{telnet_pkg}}"
+   - name: Create share path in master server
+     file: path={{export_path}} state=directory mode=0777
+   - name: Copy export file to remote server
+     copy: src=/home/gvreddy/ansible_playbooks/USECASE_PLAYBOOKS/nfsserver/exports dest=/etc/exports owner=root group=root mode=0644
+     notify: 
+     - startserverservices
+     - export nfsshare
+     - installclientpackages
+     - start client services
+     - create localmount
+     - mount the nfsshare
+#     - test nfsshare
+   handlers:
+   - name: startserverservices
+     action: service name={{item}} state=started enabled=yes
+     with_items:
+     - "{{nfsserver}}"
+     - "{{nfsrpcbind}}"
+     - "{{nfslock}}"
+     - "{{nfsidmap}}"
+     notify: export nfsshare
+   - name: export nfsshare
+     shell: exportfs -a
+   - name: installclientpackages
+     action: yum name={{item}} state=latest
+     with_items: 
+     - "{{nfsutil_pkg}}"
+     - "{{telnet_pkg}}"
+     delegate_to: 127.0.0.1
+     notify: start client services
+   - name: start client services
+     action: service name={{item}} state=started enabled=yes
+     with_items:
+     - "{{nfsrpcbind}}"
+     - "{{nfslock}}"
+     - "{{nfsidmap}}"
+     delegate_to: 127.0.0.1
+   - name: create localmount
+     file: path={{client_path}} state=directory mode=0755 
+     delegate_to: 127.0.0.1
+   - name: mount the nfsshare
+     mount: name={{client_path}} src=192.168.56.112:{{export_path}} fstype=nfs state=mounted
+     delegate_to: 127.0.0.1

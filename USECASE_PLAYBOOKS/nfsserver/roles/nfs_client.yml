@@ -1,0 +1,9 @@
+--- # Master Playbook for NFS client 
+ - hosts: local 
+   user: gvreddy
+   become: yes
+   gather_facts: yes
+   connection: ssh 
+   roles: 
+   - nfs_client
+  

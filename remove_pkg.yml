@@ -1,0 +1,20 @@
+--- # Remove installed package
+ - hosts: myhosts
+   user: gvreddy
+   become: yes
+   tasks:
+#   - name: Remove installed  package
+#     action: yum name= {{ item }} state=absent
+#     with_items:
+#      - telnet
+#      - tomcat
+#      - lynx
+#      - httpd
+   - name: Remove installed  package
+     action: yum name=telnet  state=absent
+   - name: Remove installed  package
+     action: yum name=httpd  state=absent
+   - name: Remove installed  package
+     action: yum name=lynx  state=absent
+   - name: Remove installed  package
+     action: yum name=tomcat  state=absent

@@ -1,0 +1,10 @@
+- name: restart apache2 
+  action: service name={{Suse}} state=restarted enabled=yes
+  when: "ansible_os_family == 'Suse'"
+  ignore_errors: yes
+- name: restart httpd
+  service: name={{RedHat}} state=restarted enabled=yes
+  when: "ansible_os_family == 'RedHat'"
+  ignore_errors: yes
+- name: install telnet
+  yum: pkg=telnet state=installed

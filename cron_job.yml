@@ -1,0 +1,7 @@
+--- # cron job entry
+ - hosts: myhosts
+   user: gvreddy
+   become: yes
+   tasks:
+     - name: configure cron job
+       cron: name="list files" minute="1" hour="0" job="ls -la /etc > /home/gvreddy/list_files.log"

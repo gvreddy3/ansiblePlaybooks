@@ -1,0 +1,13 @@
+--- 
+ - hosts: local
+   remote_user: gvreddy
+   become: yes
+   tasks:
+   - name: Get info
+     block:
+     - get_url: url="www.google.com" dest="/var/tmp"
+#     ignore_errors: yes 
+     rescue:
+     - debug: msg="the file is exist"
+     always:
+     - debug: msg="execte"

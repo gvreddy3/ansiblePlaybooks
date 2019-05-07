@@ -1,0 +1,14 @@
+--- # this is master playbok for webserver
+ - hosts: remote
+   user: gvreddy
+   become: yes
+   gather_facts: yes
+   connection: ssh
+   pre_tasks:
+     - name: When did the tasks started
+       raw: date > /home/gvreddy/ansible_playbooks/roles/webservers/logs/Start_log.out
+   roles:
+     - { role: redhat_webservers, when: "ansible_os_family == 'RedHat'" }
+   post_tasks:
+     - name: When did task end
+       raw: date > /home/gvreddy/ansible_playbooks/roles/webservers/logs/End_log.out

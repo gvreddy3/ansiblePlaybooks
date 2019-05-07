@@ -1,0 +1,5 @@
+ - name: install webserver
+   action: yum name=telnet state=installed 
+#   notify: restart httpd
+# - name: Install package in suse
+#   action: zypper name=apache2 state=latest

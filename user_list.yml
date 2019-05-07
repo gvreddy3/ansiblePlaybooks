@@ -1,0 +1,18 @@
+---
+ - hosts: local
+   remote_user: gvreddy
+   become: yes
+   become_method: sudo
+   vars:
+     file1name: /home/gvreddy/user.list1
+   tasks:
+   - name: create file
+     file: path="{{file1name}}" state=touch
+   - name: append data to file
+     lineinfile: path={{file1name}} line="{{item}}"
+     with_items:
+     - "{{hadoop}}"
+     - "{{cloud}}"
+     - "{{database}}"
+   
+  

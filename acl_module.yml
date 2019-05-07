@@ -1,0 +1,9 @@
+--- # ACl module
+ - hosts: remote
+   user: gvreddy
+   become: yes
+   tasks:
+     - name: Get the ACL info
+       acl: name=/etc/test.txt entity=gvreddy etype=user permissions="rw" state=present
+       register: result
+     - debug: msg={{result}}

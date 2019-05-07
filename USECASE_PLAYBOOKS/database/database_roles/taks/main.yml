@@ -1,0 +1,12 @@
+ - name: Install database package
+   action: yum name={{item}} state=latest
+   with_items:
+    - "{{dbserver_pkg}}"
+   notify:
+    - start service
+    - run secureinstall
+    - restart service
+    - create database
+    - show database
+ - name: Create cron job for database backup
+   cron: name="myDBbackup" minute="0" hour="0" job="mysqldump -uroot -phadoop@123 --databases emp > mysqldump.bkp"

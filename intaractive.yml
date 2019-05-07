@@ -1,0 +1,16 @@
+--- # Install package intaractiviely 
+ - hosts: myhosts
+   user: gvreddy
+   become: yes
+   gather_facts: no
+   connection: ssh
+   vars:
+     package_type: Centos package
+   vars_prompt:
+     - name: install_pkg
+       prompt: Enter PKG name
+       default: telnet
+       private: no
+   tasks:
+      - name: install custom package
+        yum: pkg={{install_pkg}} state=latest
